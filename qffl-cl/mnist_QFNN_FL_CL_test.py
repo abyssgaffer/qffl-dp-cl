@@ -4,7 +4,11 @@ from common.mni_QFNN import Qfnn
 from common.utils import setup_seed
 
 DEVICE = torch.device('cpu')
-NAME = 'pmnist_qffl_gas_q4_star'
+# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
+# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
+# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
+# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
+NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
 setup_seed(777)
 node = 9
 # #测试
