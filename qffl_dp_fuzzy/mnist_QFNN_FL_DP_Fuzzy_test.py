@@ -1,29 +1,10 @@
 import torch
 from tqdm import tqdm
-from common.mni_QFNN import Qfnn
+from common.mni_QFNN_dp_fuzzy import Qfnn
 from common.utils import setup_seed
-from torch.distributions import Laplace
-
-def add_laplace_noise(x: torch.Tensor, eps: float, sensitivity: float = 1.0) -> torch.Tensor:
-    """
-    Adds element-wise Laplace noise to tensor x for ε-DP.
-
-    Args:
-        x (torch.Tensor): Input tensor to privatize.
-        eps (float): Privacy budget ε.
-        sensitivity (float): Sensitivity Δ of the query function (default 1.0).
-
-    Returns:
-        torch.Tensor: Noisy tensor of same shape as x.
-    """
-    scale = sensitivity / eps
-    lap = Laplace(loc=0.0, scale=scale)
-    noise = lap.sample(x.shape).to(x.device)
-    return x + noise
-
 
 DEVICE = torch.device('cpu')
-NAME = 'pmnist_qffl_dp_yheh_gas_q4_star'
+NAME = 'pmnist_qffl_dp_fuzzy_gas_q4_star'
 setup_seed(777)
 node = 9
 # #测试
@@ -56,11 +37,9 @@ for i in tqdm(range(node)):
 out_put = torch.stack(out_put, dim=1)
 out_put = torch.softmax(out_put, dim=1)
 for i in range(node):
-    y_h = out_put[:, i, :]
-    e_h = gmm_scores[:, i].unsqueeze(1)
-    # y_h = add_laplace_noise(y_h, eps=10, sensitivity=0.95)
-    e_h = add_laplace_noise(e_h, eps=10, sensitivity=0.95)
-    out_put[:, i, :] = y_h * e_h
+    m = out_put[:, i, :]
+    n = gmm_scores[:, i].unsqueeze(1)
+    out_put[:, i, :] = out_put[:, i, :] * gmm_scores[:, i].unsqueeze(1)
 output = torch.sum(out_put, dim=1)
 pred = torch.argmin(output, dim=1)
 

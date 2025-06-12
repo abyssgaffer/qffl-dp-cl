@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from common.mni_QFNN import Qfnn
+from common.mni_QFNN_dp_fuzzy import Qfnn
 import numpy as np
 from common.utils import acc_cal, setup_seed
 from torch.utils.data import DataLoader
@@ -12,20 +12,26 @@ BATCH_SIZE = 600
 EPOCH = 5
 LR = 0.1
 DEVICE = torch.device('cpu')
+
 setup_seed(777)
 
 transform = transforms.Compose([transforms.ToTensor()])
+
 train_data = torch.load('../data/pmnist/train_data.pkl').cpu().numpy()
 train_label = torch.load('../data/pmnist/train_label.pkl').cpu().numpy()
+
 all_len = len(train_label)
 
 gmm_list = []
 weights = []
 
-NAME = f'pmnist_qffl_dp_yheh_gas_q4_star'
+NAME = f'pmnist_qffl_dp_fuzzy_gas_q4_star'
 node = 9
+
+# keep_list = [[(i+j)%10 for j in range(5)] for i in range(10)]
 keep_list = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8], [0, 9]]
 for i in range(node):
+
     model = Qfnn(DEVICE).to(DEVICE)
     optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
     loss_func = nn.CrossEntropyLoss()
