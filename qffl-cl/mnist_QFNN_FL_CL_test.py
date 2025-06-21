@@ -17,8 +17,8 @@ DEVICE = torch.device('cpu')
 # NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
 # acc:0.8895 precision:0.9084482649822562 recall:0.8884384144661862 f1:0.8813330660073329
 
-NAME = 'pmnist_qffl_cl_adapter_gas_q4_star'
-# 这里需要更改上面的模型
+# NAME = 'pmnist_qffl_cl_adapter_gas_q4_star'
+# 这里需要更改上面引用的模型
 # acc:0.884 precision:0.8289181178895019 recall:0.8813946513196946 f1:0.8462814124306925
 
 # NAME = 'pmnist_qffl_cl_gen_replay_gas_q4_star'
@@ -36,6 +36,31 @@ NAME = 'pmnist_qffl_cl_adapter_gas_q4_star'
 # NAME = 'pmnist_qffl_cl_si_gas_q4_star'
 # acc:0.8845 precision:0.8068673732733325 recall:0.8818742760045011 f1:0.839300606664952
 
+# NAME = 'pmnist_qffl_cl_er_ewc_adapter_lwf_gas_q4_star'
+# 这里需要更改上面引用的模型
+# acc:0.7915 precision:0.7988167432961062 recall:0.7897164134621029 f1:0.7441718042111889
+
+# NAME = 'pmnist_qffl_cl_er_ewc_l2_lwf_gas_q4_star'
+# acc:0.0975 precision:0.00975 recall:0.1 f1:0.01776765375854214
+
+# NAME = 'pmnist_qffl_cl_er_mas_lwf_gas_q4_star'
+# acc:0.842 precision:0.8384756290216167 recall:0.8367542095074112 f1:0.8075232615039909
+
+# NAME = 'pmnist_qffl_cl_er_pathint_lwf_gas_q4_star'
+# acc:0.842 precision:0.8384756290216167 recall:0.8367542095074112 f1:0.8075232615039909
+
+# NAME = 'pmnist_qffl_cl_er_si_adapter_lwf_gas_q4_star'
+# 这里需要更改上面引用的模型
+# acc:0.961 precision:0.9617563380261693 recall:0.9618491009102541 f1:0.9609408153310909
+
+# NAME = 'pmnist_qffl_cl_er_si_lwf_gas_q4_star'
+# acc:0.842 precision:0.8384756290216167 recall:0.8367542095074112 f1:0.8075232615039909
+
+# NAME = 'pmnist_qffl_cl_er_si_mas_lwf_gas_q4_star'
+# acc:0.842 precision:0.8384756290216167 recall:0.8367542095074112 f1:0.8075232615039909
+
+NAME = 'pmnist_qffl_cl_gen_replay_ewc_lwf_gas_q4_star'
+# acc:0.8585 precision:0.8767650454651086 recall:0.8592136664464387 f1:0.8579910228898117
 
 setup_seed(777)
 node = 9
