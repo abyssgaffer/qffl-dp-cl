@@ -1,17 +1,42 @@
 import torch
 from tqdm import tqdm
 from common.mni_QFNN import Qfnn
+# from common.mni_QFNN_adapter import Qfnn
 from common.utils import setup_seed
 
 DEVICE = torch.device('cpu')
 # NAME = 'pmnist_qffl_cl_er_gas_q4_star'
+# acc:0.8845 precision:0.8308508760440197 recall:0.881848228232888 f1:0.8474213330301545
+
 # NAME = 'pmnist_qffl_cl_ewc_gas_q4_star'
-NAME = 'pmnist_qffl_cl_lwf_gas_q4_star'
+# acc:0.844 precision:0.7691543535194488 recall:0.8371446424450035 f1:0.7977755079685818
+
+# NAME = 'pmnist_qffl_cl_lwf_gas_q4_star'
+# acc:0.8435 precision:0.7896707925659099 recall:0.8395408353248035 f1:0.8074503619964556
+
 # NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
-# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
-# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
-# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
-# NAME = 'pmnist_qffl_cl_er_ewc_lwf_gas_q4_star'
+# acc:0.8895 precision:0.9084482649822562 recall:0.8884384144661862 f1:0.8813330660073329
+
+NAME = 'pmnist_qffl_cl_adapter_gas_q4_star'
+# 这里需要更改上面的模型
+# acc:0.884 precision:0.8289181178895019 recall:0.8813946513196946 f1:0.8462814124306925
+
+# NAME = 'pmnist_qffl_cl_gen_replay_gas_q4_star'
+# acc:0.8845 precision:0.8253112814118392 recall:0.8818971638825086 f1:0.8452099982493232
+
+# NAME = 'pmnist_qffl_cl_l2_gas_q4_star'
+# acc:0.0975 precision:0.00975 recall:0.1 f1:0.01776765375854214
+
+# NAME = 'pmnist_qffl_cl_mas_gas_q4_star'
+# acc:0.8845 precision:0.8068673732733325 recall:0.8818742760045011 f1:0.839300606664952
+
+# NAME = 'pmnist_qffl_cl_pathint_gas_q4_star'
+# acc:0.8845 precision:0.8068673732733325 recall:0.8818742760045011 f1:0.839300606664952
+
+# NAME = 'pmnist_qffl_cl_si_gas_q4_star'
+# acc:0.8845 precision:0.8068673732733325 recall:0.8818742760045011 f1:0.839300606664952
+
+
 setup_seed(777)
 node = 9
 # #测试
