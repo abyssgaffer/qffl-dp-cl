@@ -1,7 +1,7 @@
 import torch
 from tqdm import tqdm
-from common.mni_QFNN import Qfnn
-# from common.mni_QFNN_adapter import Qfnn
+# from common.mni_QFNN import Qfnn
+from common.mni_QFNN_adapter import Qfnn
 from common.utils import setup_seed
 
 DEVICE = torch.device('cpu')
@@ -49,7 +49,7 @@ DEVICE = torch.device('cpu')
 # NAME = 'pmnist_qffl_cl_er_pathint_lwf_gas_q4_star'
 # acc:0.842 precision:0.8384756290216167 recall:0.8367542095074112 f1:0.8075232615039909
 
-# NAME = 'pmnist_qffl_cl_er_si_adapter_lwf_gas_q4_star'
+NAME = 'pmnist_qffl_cl_er_si_adapter_lwf_gas_q4_star'
 # 这里需要更改上面引用的模型
 # acc:0.961 precision:0.9617563380261693 recall:0.9618491009102541 f1:0.9609408153310909
 
@@ -59,7 +59,7 @@ DEVICE = torch.device('cpu')
 # NAME = 'pmnist_qffl_cl_er_si_mas_lwf_gas_q4_star'
 # acc:0.842 precision:0.8384756290216167 recall:0.8367542095074112 f1:0.8075232615039909
 
-NAME = 'pmnist_qffl_cl_gen_replay_ewc_lwf_gas_q4_star'
+# NAME = 'pmnist_qffl_cl_gen_replay_ewc_lwf_gas_q4_star'
 # acc:0.8585 precision:0.8767650454651086 recall:0.8592136664464387 f1:0.8579910228898117
 
 setup_seed(777)

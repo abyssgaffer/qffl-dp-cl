@@ -5,6 +5,7 @@ from common.utils import setup_seed
 
 DEVICE = torch.device('cpu')
 NAME = 'pmnist_qffl_gas_q4_star'
+# acc:0.8845 precision:0.8068673732733325 recall:0.8818742760045011 f1:0.839300606664952
 setup_seed(777)
 node = 9
 # #测试
