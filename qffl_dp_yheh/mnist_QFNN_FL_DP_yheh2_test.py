@@ -147,12 +147,13 @@ with torch.no_grad():
 
 # ============ DP 实验配置 ============
 mechanisms       = ['none', 'gaussian', 'laplace', 'quantum']  # 量子=高斯+QRNG
-inject_positions = ['y', 'e', 'both']
+# inject_positions = ['y', 'e', 'both']
+inject_positions = ['y']
 epsilons         = [0.5, 1.0, 2.0, 5.0, 10.0, 50.0, 100.0, 1000.0, 1e6]  # 含超大值，验证能否逼近 baseline
 delta            = 1e-5    # 高斯的 δ
 # 灵敏度（裁剪阈值）
 Y_CLIP_L2        = 1.0     # 对 p_h（概率向量）逐样本 L2 裁剪
-Y_LOGIT_CLIP_L2 = 0.2      # 对 p_h（概率向量）逐样本 L2 裁剪
+Y_LOGIT_CLIP_L2 = 0.8
 E_CLIP_ABS       = 8.0     # 对 log_e 做绝对值裁剪（标量灵敏度）；仍用你的“线性归一化”来得到 λ
 
 results = []
@@ -202,15 +203,20 @@ for mech in mechanisms:
                     if pos == 'e':
                         y_all_used = y_all
                     else:
-                        p = torch.softmax(-y_all, dim=2)     # [B, H, C] 代价→概率
-                        p = clip_l2_lastdim(p, Y_LOGIT_CLIP_L2)    # 逐样本 L2 裁剪
+                        # 1) 取 logit：z = -y
+                        z = -y_all.clone()  # [B, H, C]
+                        # 2) 可选去均值，帮助缩小范数（不影响 DP，因为后面有 clip）
+                        z = z - z.mean(dim=2, keepdim=True)
+                        # 3) 逐样本 L2 裁剪（Δ = Y_LOGIT_CLIP_L2）
+                        z = clip_l2_lastdim(z, Y_LOGIT_CLIP_L2)
+                        # 4) 加噪
                         if mech in ('gaussian', 'quantum'):
-                            p = add_gaussian_like(p, sigma=scale_y, use_qrng=use_qrng)
-                        else:
-                            p = add_laplace_like(p, b=scale_y, use_qrng=use_qrng)
-                        p = torch.clamp(p, 1e-8, 1.0)        # 限幅
-                        p = p / p.sum(dim=2, keepdim=True).clamp(min=1e-12)  # 归一化
-                        y_all_used = -torch.log(p + 1e-8)    # 回到代价域
+                            z = add_gaussian_like(z, sigma=scale_y, use_qrng=use_qrng)
+                        else:  # laplace
+                            z = add_laplace_like(z, b=scale_y, use_qrng=use_qrng)
+                        # 5) 回到概率，再映回“代价”
+                        p = torch.softmax(z, dim=2)  # [B, H, C]
+                        y_all_used = -torch.log(p.clamp_min(1e-8))  # [B, H, C]
 
                     # ----- 聚合（保持你原结构）-----
                     out_put_dp = torch.softmax(y_all_used, dim=1)  # 节点维 softmax
