@@ -24,12 +24,6 @@ def add_laplace_noise(x: torch.Tensor, eps: float, sensitivity: float = 1.0) -> 
 
 DEVICE = torch.device('cpu')
 NAME = 'pmnist_qffl_dp_yheh_gas_q4_star'
-# eps=1
-# acc:0.121 precision:0.11691733263151508 recall:0.12081292196448248 f1:0.11785194121095435
-# eps=10
-# acc:0.232 precision:0.22196847426095112 recall:0.23218641174915405 f1:0.22432163455734452
-# eps=100
-# acc:0.8175 precision:0.7362794400066356 recall:0.8144183070508284 f1:0.7723118139034343
 
 setup_seed(777)
 node = 9

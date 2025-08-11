@@ -28,7 +28,6 @@ weights = []
 NAME = f'pmnist_qffl_gas_q4_star'
 node = 9
 
-# keep_list = [[(i+j)%10 for j in range(5)] for i in range(10)]
 keep_list = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8], [0, 9]]
 for i in range(node):
 
