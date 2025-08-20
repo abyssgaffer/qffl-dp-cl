@@ -5,15 +5,16 @@ import torch
 from tqdm import tqdm
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-# from common.mni_QFNN import Qfnn
-from common.mni_QFNN_adapter import Qfnn
+from common.mni_QFNN import Qfnn
+# from common.mni_QFNN_adapter import Qfnn
 
 # ========== 基本配置 ==========
 DEVICE = torch.device('cpu')
 torch.manual_seed(777)
 np.random.seed(777)
 
-NAME_MODELS = 'pmnist_qffl_cl_er_si_adapter_lwf_gas_q4_star'
+# NAME_MODELS = 'pmnist_qffl_cl_er_si_adapter_lwf_gas_q4_star'
+NAME_MODELS = 'pmnist_qffl_gas_q4_star'
 NUM_NODES = 9
 
 # ========== LDP 核心裁剪与预算 ==========
@@ -22,7 +23,7 @@ DELTA = 1e-5            # Gaussian 机制的 δ（每客户端）
 
 # ========== 实验范围 ==========
 MECHANISMS = ['none', 'gaussian', 'laplace', 'quantum']     # 'quantum' = 高斯+QRNG
-EPSILONS   = [0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 1000.0, 1e6]
+EPSILONS   = [1.0,  5.0, 10.0, 20.0, 50.0, 100.0, 1000.0]
 
 # ========== 后处理 + 网格搜索（均不影响 DP 保证） ==========
 # 说明：适当收敛搜索空间以控制运行时间，按需自行扩展
