@@ -1,7 +1,7 @@
 import pennylane as qml
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+
 
 def add_dp_noise(x: torch.Tensor, eps: float, sensitivity: float = 1.0) -> torch.Tensor:
     """
@@ -10,6 +10,7 @@ def add_dp_noise(x: torch.Tensor, eps: float, sensitivity: float = 1.0) -> torch
     scale = sensitivity / eps
     noise = torch.distributions.Laplace(0.0, scale).sample(x.shape).to(x.device)
     return x + noise
+
 
 n_qubits = 3
 n_fuzzy_mem = 2
@@ -81,8 +82,8 @@ class Qfnn(nn.Module):
         self.qlayer = qml.qnn.TorchLayer(q_tnorm_node, weight_shapes)
         self.defuzz = qml.qnn.TorchLayer(q_defuzz, defuzz_weight_shapes)
 
-        self.eps_fuzzy = 10       # 隐私预算 ε，可调
-        self.sens_fuzzy = 1.0       # 隶属度敏感度 Δ（隶属度在 [0,1]，取1）
+        self.eps_fuzzy = 10  # 隐私预算 ε，可调
+        self.sens_fuzzy = 1.0  # 隶属度敏感度 Δ（隶属度在 [0,1]，取1）
 
     def forward(self, x):
         device = self.device
@@ -102,9 +103,9 @@ class Qfnn(nn.Module):
         # —— 在“训练阶段”对隶属度加拉普拉斯噪声 ——
         # if self.training is False:
         fuzzy_list0 = add_dp_noise(fuzzy_list0, eps=self.eps_fuzzy,
-                                       sensitivity=self.sens_fuzzy).clamp(0.0, 1.0)
+                                   sensitivity=self.sens_fuzzy).clamp(0.0, 1.0)
         fuzzy_list1 = add_dp_noise(fuzzy_list1, eps=self.eps_fuzzy,
-                                       sensitivity=self.sens_fuzzy).clamp(0.0, 1.0)
+                                   sensitivity=self.sens_fuzzy).clamp(0.0, 1.0)
 
         fuzzy_list = torch.stack([fuzzy_list0, fuzzy_list1], dim=1)
         # ===============================

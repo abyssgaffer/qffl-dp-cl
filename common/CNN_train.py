@@ -1,16 +1,9 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import numpy as np
 from CNN import CNN
-from utils import get_logger, setup_seed, draw_loss, draw_acc, acc_cal
-from torch.utils.data import DataLoader
-from torchvision import transforms
-from torchvision.datasets import ImageFolder
+from common.utils import get_logger, setup_seed, acc_cal
 from torchvision import datasets, transforms
 from tqdm import tqdm
-import os
-import time
 
 BATCH_SIZE = 5000
 EPOCH = 50

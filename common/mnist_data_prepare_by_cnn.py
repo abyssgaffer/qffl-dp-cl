@@ -1,6 +1,5 @@
 import torch
-from utils import setup_seed
-from torch.utils.data import DataLoader
+from common.utils import setup_seed
 from torchvision import datasets, transforms
 from tqdm import tqdm
 

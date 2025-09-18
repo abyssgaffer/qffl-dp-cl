@@ -1,10 +1,6 @@
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import numpy as np
-from CNN import CNN
-from mni_QFNN import Qfnn
-from utils import get_logger, setup_seed, draw_loss, draw_acc, acc_cal
+from common.utils import setup_seed
 from torch.utils.data import DataLoader, Dataset
 from torchvision import datasets, transforms
 from tqdm import tqdm
@@ -17,6 +13,7 @@ setup_seed(777)
 np.random.seed(42)
 permute_idx = np.random.permutation(28 * 28)
 
+
 # ========== 2. 定义 Permuted MNIST Dataset ==========
 class PermutedMNIST(Dataset):
     def __init__(self, train=True):
@@ -27,10 +24,11 @@ class PermutedMNIST(Dataset):
 
     def __getitem__(self, idx):
         img, label = self.dataset[idx]
-        img = img.view(-1).numpy()               # 展平成 [784]
-        img = img[permute_idx]                   # 应用固定置换
+        img = img.view(-1).numpy()  # 展平成 [784]
+        img = img[permute_idx]  # 应用固定置换
         img = torch.tensor(img, dtype=torch.float32).view(1, 28, 28)  # 变回 [1, 28, 28]
         return img, label
+
 
 # ========== 3. 提取特征函数 ==========
 def extract_features(data_loader, model):
@@ -44,6 +42,7 @@ def extract_features(data_loader, model):
         all_data.append(out.cpu())
         all_label.append(y.cpu())
     return torch.cat(all_data), torch.cat(all_label)
+
 
 # ========== 4. 主程序入口 ==========
 def main():
@@ -70,6 +69,7 @@ def main():
     torch.save(test_label, '../data/pmnist/test_label.pkl')
 
     print("✅ PMNIST CNN特征已保存到 ../data/pmnist/")
+
 
 # ========== 5. 启动入口 ==========
 if __name__ == "__main__":

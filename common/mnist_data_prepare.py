@@ -1,9 +1,10 @@
 import torch
-from utils import setup_seed
+from common.utils import setup_seed
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from tqdm import tqdm
 import os
+
 
 def extract_raw_images(data_loader):
     all_data = []
@@ -13,6 +14,7 @@ def extract_raw_images(data_loader):
         all_data.append(x)
         all_label.append(y)
     return torch.cat(all_data), torch.cat(all_label)
+
 
 if __name__ == "__main__":
     DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

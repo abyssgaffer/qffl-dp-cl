@@ -2,12 +2,10 @@ import pennylane as qml
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 n_qubits = 3
 
 n_fuzzy_mem = 2
-# device='cuda:0'
 defuzz_qubits = n_qubits
 defuzz_layer = 2
 

@@ -1,13 +1,11 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import numpy as np
 from CNN import CNN
-from utils import get_logger, setup_seed, acc_cal
+from common.utils import get_logger, setup_seed, acc_cal
 from torch.utils.data import DataLoader, Dataset
 from torchvision import datasets, transforms
 from tqdm import tqdm
-import os
 
 # ========== 设置 ==========
 BATCH_SIZE = 5000
@@ -20,20 +18,23 @@ setup_seed(777)
 # ========== 固定像素置换 ==========
 permute_idx = np.random.RandomState(seed=42).permutation(28 * 28)
 
+
 # ========== 自定义数据集：PMNIST ==========
 class PermutedMNIST(Dataset):
     def __init__(self, train=True):
-        self.dataset = datasets.MNIST(root="../data/opmnist", train=train, download=True, transform=transforms.ToTensor())
+        self.dataset = datasets.MNIST(root="../data/opmnist", train=train, download=True,
+                                      transform=transforms.ToTensor())
 
     def __len__(self):
         return len(self.dataset)
 
     def __getitem__(self, idx):
         img, label = self.dataset[idx]
-        img = img.view(-1).numpy()                   # 展平成 784
-        img = img[permute_idx]                       # 打乱像素
+        img = img.view(-1).numpy()  # 展平成 784
+        img = img[permute_idx]  # 打乱像素
         img = torch.tensor(img, dtype=torch.float32).view(1, 28, 28)  # 再 reshape 成图片格式
         return img, label
+
 
 # ========== 加载数据 ==========
 data_train = PermutedMNIST(train=True)
