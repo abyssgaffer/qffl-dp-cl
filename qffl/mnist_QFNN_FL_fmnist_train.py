@@ -16,15 +16,15 @@ setup_seed(777)
 
 transform = transforms.Compose([transforms.ToTensor()])
 
-train_data = torch.load('../data/pmnist/train_data.pkl').cpu().numpy()
-train_label = torch.load('../data/pmnist/train_label.pkl').cpu().numpy()
+train_data = torch.load('../data/fmnist/train_data.pkl').cpu().numpy()
+train_label = torch.load('../data/fmnist/train_label.pkl').cpu().numpy()
 
 all_len = len(train_label)
 
 gmm_list = []
 weights = []
 
-NAME = f'pmnist_qffl_gas_q4_star'
+NAME = f'fmnist_qffl_gas_q4_star'
 node = 9
 
 keep_list = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8], [0, 9]]
