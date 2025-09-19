@@ -4,13 +4,12 @@ from common.mni_QFNN import Qfnn
 from common.utils import setup_seed
 
 DEVICE = torch.device('cpu')
-NAME = 'pmnist_qffl_gas_q4_star'
-# acc:0.8845 precision:0.8068673732733325 recall:0.8818742760045011 f1:0.839300606664952
+NAME = 'fmnist_qffl_gas_q4_star'
 setup_seed(777)
 node = 9
 # #测试
-test_data = torch.load('../data/pmnist/test_data.pkl').to(DEVICE)[:2000]
-label = torch.load('../data/pmnist/test_label.pkl').to(DEVICE)[:2000]
+test_data = torch.load('../data/fmnist/test_data.pkl').to(DEVICE)[:2000]
+label = torch.load('../data/fmnist/test_label.pkl').to(DEVICE)[:2000]
 
 gmm_list = torch.load(f'../result/data/{NAME}_gmm_list', weights_only=False)
 data_weights = torch.load(f'../result/data/{NAME}_data_weights')
